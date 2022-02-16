@@ -11,12 +11,12 @@ import javax.persistence.Table;
 @Table(name = "Customers")
 
 public class Customer {
-	private int id;
+	private long id;
 	private String name;
 	
 	public Customer() {}
 	
-	public Customer(int id, String name) {
+	public Customer(long id, String name) {
 		this.id = id;
 		this.name = name;
 		}
@@ -27,7 +27,7 @@ public class Customer {
 		return id;
 		}
 	
-	public void setId(int id){
+	public void setId(long id){
 		this.id = id;
 		}
 	
