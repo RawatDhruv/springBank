@@ -5,16 +5,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Accounts")
 public class Account {
-	private int id;
-    private int userId;
+	private long id;
+    private long customerId;
     private double balance;
 
     public Account() {
     }
 
-    public Account(int id, int userId, double balance) {
+    public Account(long id, long customerId, double balance) {
         this.id = id;
-        this.userId = userId;
+        this.customerId = customerId;
         this.balance = balance;
     }
 
@@ -24,17 +24,17 @@ public class Account {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(long id){
         this.id = id;
     }
 
-    @Column(name = "user_id", nullable = false)
-    public long getUserId(){
-        return userId;
+    @Column(name = "customer_id", nullable = false)
+    public long getCustomerId(){
+        return customerId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     @Column(name = "balance", nullable = false)
