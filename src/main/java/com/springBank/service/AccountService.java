@@ -42,6 +42,13 @@ public class AccountService {
         account.setCustomerId(newAccount.getCustomerId());
         return accountRepository.save(account);
 	}
+	public ResponseEntity<Account> deleteAccount(Long accountId)throws ResourceNotFoundException {
+		Account account = accountRepository.findById(accountId)
+				.orElseThrow(() -> new ResourceNotFoundException("Account" +accountId));
+
+		accountRepository.delete(account);
+		return ResponseEntity.ok().build();
+	}
 	
 	
 	

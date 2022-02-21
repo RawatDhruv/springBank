@@ -44,27 +44,9 @@ public class AccountController {
 	        return accountService.createAccount(newAccount);
 	    }
 
-	    @PostMapping(value = "/depositmoney")
-	    public Account depositMoney(@RequestParam(value = "accountId") long accountId, @RequestParam("amount") double amount) throws ResourceNotFoundException {
-	        Account account = accountRepository.findById(accountId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + accountId));
-	        double initialBalance = account.getBalance();
-	        account.setBalance(initialBalance+amount);
-	        return accountRepository.save(account);
-	    }
-
-	    @PostMapping(value = "/withdrawmoney")
-	    public Account withdrawMoney(@RequestParam(value = "accountId") long accountId, @RequestParam("amount") double amount) throws ResourceNotFoundException {
-	        Account account = accountRepository.findById(accountId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + accountId));
-	        double initialBalance = account.getBalance();
-	        if (amount > initialBalance) {
-	            System.out.println("Withdrawal amount exceeded");
-	            return null;
-	        }
-	        account.setBalance(initialBalance-amount);
-	        return accountRepository.save(account);
-	    }
+	@DeleteMapping(value = "/deleteaccount")
+	public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId) throws ResourceNotFoundException {
+		return accountService.deleteAccount(accountId);
 
 
-}
+}}
