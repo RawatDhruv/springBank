@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-
+import com.springBank.exception.ResourceNotFoundException;
 import com.springBank.model.Customer;
 
 
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-import com.springBank.model.Customer;
 import com.springBank.repository.CustomerRepository;
 
 
@@ -48,5 +47,10 @@ public class CustomerService {
 	}
 
 
+    public ResponseEntity<Customer> delete(long id)throws ResourceNotFoundException {
+       Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("account" +id));
 
+       customerRepository.delete(customer);
+       return ResponseEntity.ok().build();
+    }
 }
