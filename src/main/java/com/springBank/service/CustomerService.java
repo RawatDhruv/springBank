@@ -1,14 +1,23 @@
 package com.springBank.service;
 
+
 import java.util.List;
 import java.util.Optional;
+
+
+
+import com.springBank.model.Customer;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+
 import com.springBank.model.Customer;
 import com.springBank.repository.CustomerRepository;
+
+
 
 @Service
 public class CustomerService {
@@ -37,5 +46,7 @@ public class CustomerService {
 	public List<Customer> findAll() {
 		return (List<Customer>) customerRepository.findAll();
 	}
+
+
 
 }
