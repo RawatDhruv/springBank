@@ -8,30 +8,76 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
+
+@Entity
+@Table(name = "Transactions")
 public class Transaction {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
-    private String accountName;
+	private Long fromAccount;
+	private Long toAccount;
     private String type;
-    private BigDecimal balanceBefore;
-    private BigDecimal balanceAfter;
-//    private Double amount;
+    private double amount;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+		return id;
+	}
+    public void setId(long id){
+        this.id = id;
+    }
 
-    @CreatedBy
-    @Column(nullable = false, updatable = false)
-    protected String createdBy;
+    @Column(name = "from_Account")
+	public Long getFromAccount() {
+		return fromAccount;
+	}
 
-    @CreatedDate
+  
+	public void setFromAccount(Long fromAccount) {
+		this.fromAccount = fromAccount;
+	}
+
+	@Column(name = "to_Account")
+	public Long getToAccount() {
+		return toAccount;
+	}
+
+    
+	public void setToAccount(Long toAccount) {
+		this.toAccount = toAccount;
+	}
+
+	@Column(name = "type", nullable = false)
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+ 
+	@Column(name = "amount", nullable = false)
+    public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	@CreatedDate
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
     protected ZonedDateTime createdDatetime;
 
+	public Transaction(Long id, Long fromAccount, Long toAccount, String type, Double amount) {
+		this.fromAccount = fromAccount;
+		this.toAccount = toAccount;
+		this.type = type;
+		this.amount = amount;
+	}
 
-    public Transaction(String accountName, String type, BigDecimal balanceBefore, BigDecimal balanceAfter) {
-        this.accountName = accountName;
-        this.type = type;
-        this.balanceBefore = balanceBefore;
-        this.balanceAfter = balanceAfter;
-    }
-
+	
 }
