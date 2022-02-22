@@ -6,17 +6,18 @@ import com.springBank.model.Transaction;
 import com.springBank.repository.AccountRepository;
 import com.springBank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class TransactionService1 {
+@Service
+public class TransactionService {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+     TransactionRepository transactionRepository;
     @Autowired
-    private AccountRepository accountRepository;
+     AccountRepository accountRepository;
 
-    Transaction trans;
 
-    public Account withdawal(double amount , long accountId)throws ResourceNotFoundException {
+    public Account withdrawal(double amount , long accountId)throws ResourceNotFoundException {
 
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + accountId));
@@ -36,6 +37,27 @@ public class TransactionService1 {
         return accountRepository.save(account);
 
 
+
+    }
+    public Transaction transact(Transaction transaction)throws ResourceNotFoundException
+    {
+        String s = transaction.getType();
+        if(s.equalsIgnoreCase("Withdraw"))
+        {
+            withdrawal(transaction.getAmount(),transaction.getFromAccount());
+
+        }
+        else if(s.equalsIgnoreCase("Deposit"))
+        {
+            deposit(transaction.getAmount(),transaction.getToAccount());
+
+        }
+        else if(s.equalsIgnoreCase("Transfer"))
+        {
+            withdrawal(transaction.getAmount(),transaction.getFromAccount());
+            deposit(transaction.getAmount(), transaction.getToAccount());
+        }
+        return transactionRepository.save(transaction);
 
     }
 }
