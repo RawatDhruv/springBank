@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+
 @Entity
 @Table(name = "Transactions")
 public class Transaction {
@@ -24,15 +25,17 @@ public class Transaction {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
+
     public void setId(long id){
         this.id = id;
     }
 
     @Column(name = "from_Account")
+  
     public Long getFromAccount() {
         return fromAccount;
     }
@@ -96,7 +99,5 @@ public class Transaction {
         this.amount = amount;
         this.Time= Time;
     }
-
-
 
 }

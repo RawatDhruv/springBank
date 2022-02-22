@@ -35,7 +35,8 @@ public class CustomerController {
         
         return customerService.save(customer);
     }
-    @DeleteMapping("/deletecustomerid")
+
+    @DeleteMapping("/deletecustomer/{id}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable(value ="id" )  long id) throws ResourceNotFoundException {
         return customerService.delete(id);
     }

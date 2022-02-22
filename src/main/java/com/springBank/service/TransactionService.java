@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 public class TransactionService {
 
     @Autowired
-     TransactionRepository transactionRepository;
+    TransactionRepository transactionRepository;
     @Autowired
-     AccountRepository accountRepository;
+    AccountRepository accountRepository;
 
 
-    public Account withdrawal(double amount , long accountId)throws ResourceNotFoundException {
+
+    public Account withdraw(double amount , long accountId)throws ResourceNotFoundException {
 
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + accountId));
@@ -29,13 +30,13 @@ public class TransactionService {
         account.setBalance(initialBalance-amount);
         return accountRepository.save(account);
     }
+  
     public Account deposit(double amount,long accountId)throws ResourceNotFoundException
     {
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundException(("Account not for this id::"+accountId)));
         double intialamount = account.getBalance();
         account.setBalance(amount+intialamount);
         return accountRepository.save(account);
-
 
 
     }
@@ -61,3 +62,4 @@ public class TransactionService {
 
     }
 }
+
