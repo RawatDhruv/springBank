@@ -22,7 +22,7 @@ import com.springBank.repository.CustomerRepository;
 public class CustomerService {
 	
 	@Autowired
-    private CustomerRepository customerRepository;
+   CustomerRepository customerRepository;
 	
 	public void addCustomer(Customer customer) {
 		

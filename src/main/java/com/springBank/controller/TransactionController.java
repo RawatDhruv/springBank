@@ -1,4 +1,5 @@
 package com.springBank.controller;
+import com.springBank.service.TransactionService1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -6,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springBank.exception.ResourceNotFoundException;
 import com.springBank.model.Account;
-import com.springBank.service.TransactionService;
+
 @RestController
 public class TransactionController {
-    @Autowired
-    TransactionService transactionService;
+
+    TransactionService1 transactionService;
 
     @PostMapping(value = "/depositmoney")
     public Account depositMoney(@RequestParam(value = "accountId") long accountId, @RequestParam("amount") double amount) throws ResourceNotFoundException {

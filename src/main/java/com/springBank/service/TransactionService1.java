@@ -7,7 +7,7 @@ import com.springBank.repository.AccountRepository;
 import com.springBank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class TransactionService {
+public class TransactionService1 {
 
     @Autowired
     private TransactionRepository transactionRepository;
