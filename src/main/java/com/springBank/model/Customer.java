@@ -13,13 +13,45 @@ import javax.persistence.Table;
 public class Customer {
 	private long id;
 	private String name;
+	private String email;
+	private String phoneNo;
+	private String address;
 	
-	public Customer() {}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	
-	public Customer(long id, String name) {
+	public Customer() {};
+
+	public Customer(long id, String name, String email, String phoneNo, String address) {
 		this.id = id;
 		this.name = name;
-		}
+		this.email = email;
+		this.phoneNo = phoneNo;
+		this.address = address;
+	}
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +74,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", phoneNo=" + phoneNo + ", address="
+				+ address + "]";
 	}
 	
 

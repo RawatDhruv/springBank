@@ -7,8 +7,10 @@ import com.springBank.repository.AccountRepository;
 import com.springBank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class TransactionService {
 
     @Autowired
@@ -37,19 +39,26 @@ public class TransactionService {
         return accountRepository.save(account);
 
     }
-	public Transaction transact(Transaction transaction) throws ResourceNotFoundException {
-		String type = transaction.getType();
-		if(type.equals("withdraw")) {
-			withdraw(transaction.getAmount(),transaction.getFromAccount());
-		}
-		else if(type.equals("deposit")) {
-			deposit(transaction.getAmount(),transaction.getToAccount());
-		}
-		else if(type.equals("transfer")) {
-			withdraw(transaction.getAmount(),transaction.getFromAccount());
-			deposit(transaction.getAmount(),transaction.getToAccount());
-		}
-		return transactionRepository.save(transaction);
-	}
+    public Transaction transact(Transaction transaction)throws ResourceNotFoundException
+    {
+        String s = transaction.getType();
+        if(s.equalsIgnoreCase("Withdraw"))
+        {
+            withdraw(transaction.getAmount(),transaction.getFromAccount());
+
+        }
+        else if(s.equalsIgnoreCase("Deposit"))
+        {
+            deposit(transaction.getAmount(),transaction.getToAccount());
+
+        }
+        else if(s.equalsIgnoreCase("Transfer"))
+        {
+            withdraw(transaction.getAmount(),transaction.getFromAccount());
+            deposit(transaction.getAmount(), transaction.getToAccount());
+        }
+        return transactionRepository.save(transaction);
+
+    }
     
 }

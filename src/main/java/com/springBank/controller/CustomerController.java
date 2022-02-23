@@ -1,24 +1,18 @@
 package com.springBank.controller;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.springBank.repository.CustomerRepository;
 import com.springBank.service.CustomerService;
 import com.springBank.model.Customer;
 import com.springBank.exception.*;
 
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-//@Transactional
 public class CustomerController {
 	
 	@Autowired
@@ -36,10 +30,15 @@ public class CustomerController {
         return customerService.getCustomerbyId(customerId);
     }
 
-    @PostMapping("/addcustomer")
+    @PostMapping("/addCustomer")
     public Customer createCustomer(@RequestBody Customer customer) {
         
         return customerService.save(customer);
+    }
+    
+    @DeleteMapping("/deleteCustomer/{id}")
+    public ResponseEntity<Customer> deleteCustomer(@PathVariable(value ="id" )  long id) throws ResourceNotFoundException {
+        return customerService.delete(id);
     }
     
 }

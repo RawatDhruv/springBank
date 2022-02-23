@@ -1,12 +1,8 @@
 package com.springBank.model;
-import com.springBank.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+
+import java.util.Date;
 
 
 @Entity
@@ -67,17 +63,31 @@ public class Transaction {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
+	private Date time;
 
-	@CreatedDate
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
-    protected ZonedDateTime createdDatetime;
+	@PrePersist
+	private void onCreate()
+	{
+		time = new Date();
+		}
+	
+	public Date getTime() {
+        return time;
+    }
 
-	public Transaction(Long id, Long fromAccount, Long toAccount, String type, Double amount) {
-		this.fromAccount = fromAccount;
-		this.toAccount = toAccount;
-		this.type = type;
-		this.amount = amount;
-	}
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
+	public Transaction(Long id, Long fromAccount, Long toAccount, String type, Double amount, Date time) {
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+        this.type = type;
+        this.amount = amount;
+        this.time= time;
+    }
 	
 }
