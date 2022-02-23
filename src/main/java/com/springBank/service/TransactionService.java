@@ -7,8 +7,10 @@ import com.springBank.repository.AccountRepository;
 import com.springBank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class TransactionService {
 
     @Autowired
@@ -45,7 +47,11 @@ public class TransactionService {
         String s = transaction.getType();
         if(s.equalsIgnoreCase("Withdraw"))
         {
+
             withdrawal(transaction.getAmount(),transaction.getFromAccount());
+
+            withdraw(transaction.getAmount(),transaction.getFromAccount());
+
 
         }
         else if(s.equalsIgnoreCase("Deposit"))
@@ -55,11 +61,13 @@ public class TransactionService {
         }
         else if(s.equalsIgnoreCase("Transfer"))
         {
+
             withdrawal(transaction.getAmount(),transaction.getFromAccount());
+
+            withdraw(transaction.getAmount(),transaction.getFromAccount());
+
             deposit(transaction.getAmount(), transaction.getToAccount());
         }
         return transactionRepository.save(transaction);
 
     }
-}
-
