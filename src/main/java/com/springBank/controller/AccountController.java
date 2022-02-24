@@ -40,10 +40,7 @@ public class AccountController {
 	    }
 
 
-	   @DeleteMapping(value = "/deleteaccount/{id}")
-	   public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId) throws ResourceNotFoundException {
-		 return accountService.deleteAccount(accountId);
 
 
 
-}}
+}

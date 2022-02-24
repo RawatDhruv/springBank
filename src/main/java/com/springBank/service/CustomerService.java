@@ -6,9 +6,11 @@ import java.util.Optional;
 
 
 import com.springBank.exception.ResourceNotFoundException;
+import com.springBank.model.Account;
 import com.springBank.model.Customer;
 
 
+import com.springBank.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,8 @@ public class CustomerService {
 	
 	@Autowired
    CustomerRepository customerRepository;
+	@Autowired
+	AccountRepository accountRepository;
 	
 	public void addCustomer(Customer customer) {
 		
@@ -54,16 +58,19 @@ public class CustomerService {
 	}
 	
 	public ResponseEntity<Customer> delete(long id)throws ResourceNotFoundException {
+
+		Account account1 = new Account();
 		Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("account" +id));
-		customerRepository.delete(customer);
-		return ResponseEntity.ok().build();
+		Optional<Account> account = accountRepository.findById(account1.getCustomerId());
+		if(!account.isPresent())
+		{
+
+			customerRepository.delete(customer);
+			return ResponseEntity.ok().build();
+		}
+		return null;
+
 	}
 
 
-    public ResponseEntity<Customer> delete(long id)throws ResourceNotFoundException {
-       Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("account" +id));
-
-       customerRepository.delete(customer);
-       return ResponseEntity.ok().build();
-    }
 }

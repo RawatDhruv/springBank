@@ -20,7 +20,7 @@ public class TransactionService {
 
 
 
-    public Account withdraw(double amount , long accountId)throws ResourceNotFoundException {
+    public Account withdrawal(double amount , long accountId)throws ResourceNotFoundException {
 
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + accountId));
@@ -50,7 +50,7 @@ public class TransactionService {
 
             withdrawal(transaction.getAmount(),transaction.getFromAccount());
 
-            withdraw(transaction.getAmount(),transaction.getFromAccount());
+
 
 
         }
@@ -64,10 +64,10 @@ public class TransactionService {
 
             withdrawal(transaction.getAmount(),transaction.getFromAccount());
 
-            withdraw(transaction.getAmount(),transaction.getFromAccount());
+
 
             deposit(transaction.getAmount(), transaction.getToAccount());
         }
         return transactionRepository.save(transaction);
 
-    }
+    }}

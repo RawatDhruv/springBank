@@ -19,6 +19,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Transactions")
+
 public class Transaction {
 
     private Long id;
@@ -77,38 +78,7 @@ public class Transaction {
         return amount;
     }
 
-
     public void setAmount(double amount) {
-        this.amount = amount;
-    }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date Time;
-
-    @PrePersist
-    private void onCreate()
-    {
-        Time = new Date();
-    }
-
-    public Date getUpadtedtime() {
-        return Time;
-    }
-
-    public void setUpadtedtime(Date Time) {
-        Time = Time;
-    }
-
-    public Transaction(Long id, Long fromAccount, Long toAccount, String type, Double amount, Date Time) {
-        this.fromAccount = fromAccount;
-        this.toAccount = toAccount;
-        this.type = type;
-        this.amount = amount;
-        this.Time= Time;
-    }
-
-
-	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	

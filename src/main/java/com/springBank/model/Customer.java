@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.lang.String;
 
 @Entity
 @Table(name = "Customers")
@@ -13,9 +14,13 @@ import javax.persistence.Table;
 public class Customer {
 	private long id;
 	private String name;
+
 	private String email;
 	private String phoneNo;
 	private String address;
+
+
+
 	
 
 	public String getEmail() {
