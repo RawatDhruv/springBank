@@ -11,7 +11,6 @@ import com.springBank.model.Account;
 import com.springBank.exception.*;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AccountController {
 	    
 	    @Autowired
@@ -29,12 +28,12 @@ public class AccountController {
 	    	return accountService.getAccountById(accountId);
 	    }
 
-	    @PostMapping("/addaccount")
+	    @PostMapping("/addAccount")
 	    public Account createAccount(@RequestBody Account newAccount) {	        
 	        return accountService.createAccount(newAccount);
 	    }
 	    
-	    @DeleteMapping(value = "/deleteaccount/{id}")
+	    @DeleteMapping(value = "/deleteAccount/{id}")
 		public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId) throws ResourceNotFoundException {
 	    	return accountService.deleteAccount(accountId);
 	    }
