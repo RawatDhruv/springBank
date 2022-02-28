@@ -5,6 +5,7 @@ import com.springBank.exception.ResourceNotFoundException;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.springBank.service.CustomerService;
@@ -33,9 +34,10 @@ public class CustomerController {
     }
 
     @PostMapping("/addCustomer")
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         
-        return customerService.save(customer);
+         customerService.save(customer);
+         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
