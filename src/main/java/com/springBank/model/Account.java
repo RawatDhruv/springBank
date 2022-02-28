@@ -1,5 +1,7 @@
 package com.springBank.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,6 +9,7 @@ import javax.persistence.*;
 public class Account {
 	private long id;
     private long customerId;
+ 
     private double balance;
 
     public Account() {

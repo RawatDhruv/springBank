@@ -5,6 +5,7 @@ import org.hibernate.internal.util.ZonedDateTimeComparator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,6 +27,7 @@ public class Transaction {
     private Long fromAccount;
     private Long toAccount;
     private String type;
+    @NonNull
     private double amount;
 
     public Transaction() {

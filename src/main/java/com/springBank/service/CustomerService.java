@@ -59,7 +59,7 @@ public class CustomerService {
 		return (List<Customer>) customerRepository.findAll();
 	}
 	
-	public ResponseEntity<Customer> delete(long id)throws ResourceNotFoundException {
+	public ResponseEntity  delete(long id)throws ResourceNotFoundException {
 
 		Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("account" +id));
 		List<Account> accounts = accountRepository.findAll();
@@ -69,7 +69,7 @@ public class CustomerService {
 			return null;
 		}
 		customerRepository.delete(customer);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.ok().body("Customer deleted");
 
 	}
 

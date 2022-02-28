@@ -1,5 +1,7 @@
 package com.springBank.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import java.lang.String;
 
 public class Customer {
 	private long id;
+	@NonNull
 	private String name;
 
 	private String email;

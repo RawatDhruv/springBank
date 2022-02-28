@@ -35,7 +35,8 @@ public class CustomerController {
 
     @PostMapping("/addCustomer")
     public ResponseEntity createCustomer(@RequestBody Customer customer) {
-        
+        if((customer.getName() == null)||(customer.getAddress() == null) || (customer.getEmail() == null))
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing Customer Field");
          customerService.save(customer);
          return ResponseEntity.status(HttpStatus.CREATED).body("Customer id Created");
     }
