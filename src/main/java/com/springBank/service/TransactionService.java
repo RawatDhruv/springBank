@@ -35,15 +35,14 @@ public class TransactionService {
 	        return ResponseEntity.ok().body("Withdrawl Successfull");	
 	}
 
-	public ResponseEntity<Transaction> deposit(Transaction transaction) throws ResourceNotFoundException {
+	public ResponseEntity deposit(Transaction transaction) throws ResourceNotFoundException {
 		 Account account = accountRepository.findById(transaction.getToAccount()).orElseThrow(() -> new ResourceNotFoundException(("Account not for this id::"+transaction.getToAccount())));
 	        double intialamount = account.getBalance();
 	        account.setBalance(transaction.getAmount()+intialamount);
 	        accountRepository.save(account);
 	        transaction.setType("deposit");
 	        transactionRepository.save(transaction);
-	        System.out.println("inside deposit");
-	        return ResponseEntity.ok().build();
+	        return ResponseEntity.ok().body("Deposit Successful");
 	}
 
 	public ResponseEntity transfer(Transaction transaction) throws ResourceNotFoundException {

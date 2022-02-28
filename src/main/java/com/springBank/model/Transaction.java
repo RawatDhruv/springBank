@@ -2,6 +2,8 @@ package com.springBank.model;
 
 import javax.persistence.*;
 
+import org.springframework.lang.NonNull;
+
 import java.util.Date;
 
 
@@ -13,6 +15,7 @@ public class Transaction {
 	private Long fromAccount;
 	private Long toAccount;
     private String type;
+    @NonNull
     private double amount;
     
     @Id
