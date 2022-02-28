@@ -34,10 +34,10 @@ public class CustomerController {
     }
 
     @PostMapping("/addCustomer")
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity createCustomer(@RequestBody Customer customer) {
         
          customerService.save(customer);
-         return ResponseEntity.status(HttpStatus.CREATED).build();
+         return ResponseEntity.status(HttpStatus.CREATED).body("Customer id Created");
     }
 
 

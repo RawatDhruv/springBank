@@ -30,7 +30,7 @@ public class AccountController {
 	    }
 
 	    @PostMapping("/addaccount")
-	    public Account createAccount(@RequestBody Account newAccount) {	        
+	    public ResponseEntity createAccount(@RequestBody Account newAccount) {
 	        return accountService.createAccount(newAccount);
 	    }
 	    

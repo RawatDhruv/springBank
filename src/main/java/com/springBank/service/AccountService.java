@@ -36,25 +36,26 @@ public class AccountService {
         return ResponseEntity.ok().body(account);
 	}
 
-	public Account createAccount(Account newAccount) {
+	public ResponseEntity createAccount(Account newAccount) {
 		Optional<Customer> customer = customerRepository.findById(newAccount.getCustomerId());
 		if(!customer.isPresent()) {
 			System.out.println("No Customer Found");
-			return null;
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No id customer id");
 		}
 		List<Account> accounts = accountRepository.findAll();
 		List<Account> customerAccounts = accounts.stream().filter(account1 -> account1.getCustomerId() == newAccount.getCustomerId()).collect(Collectors.toList());
 		if (customerAccounts.size()>=3) {
 			System.out.println("More than 3 accounts found for customerID " + newAccount.getCustomerId());
-			return null;
+			return ResponseEntity.status(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED).body("More than 3 accounts found for customerID ");
 		}
-		return accountRepository.save(newAccount);
+		 accountRepository.save(newAccount);
+		return ResponseEntity.status(HttpStatus.CREATED).body("Account Created Successfully");
 	}
 
 
-	public ResponseEntity<Account> deleteAccount(Long accountId)throws ResourceNotFoundException {
+	public ResponseEntity deleteAccount(Long accountId)throws ResourceNotFoundException {
 		accountRepository.deleteById(accountId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Account Deleted ");
 	}
 	
 	

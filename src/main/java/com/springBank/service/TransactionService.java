@@ -6,6 +6,8 @@ import com.springBank.model.Transaction;
 import com.springBank.repository.AccountRepository;
 import com.springBank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,60 +16,52 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransactionService {
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
-
-
-    public Account withdrawal(double amount , long accountId)throws ResourceNotFoundException {
-
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + accountId));
+    public ResponseEntity withdraw(Transaction transaction) throws ResourceNotFoundException {
+        Account account = accountRepository.findById(transaction.getFromAccount())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + transaction.getFromAccount()));
         double initialBalance = account.getBalance();
-        if (amount > initialBalance) {
+        if (transaction.getAmount() > initialBalance) {
             System.out.println("Withdrawal amount exceeded");
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Insufficient Balance");
         }
-        account.setBalance(initialBalance-amount);
-        return accountRepository.save(account);
+        account.setBalance(initialBalance - transaction.getAmount());
+        accountRepository.save(account);
+        transaction.setType("withdraw");
+        transactionRepository.save(transaction);
+        return ResponseEntity.ok().body("Withdrawl Successfull");
     }
-  
-    public Account deposit(double amount,long accountId)throws ResourceNotFoundException
-    {
-        Account account = accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundException(("Account not for this id::"+accountId)));
+
+    public ResponseEntity<Transaction> deposit(Transaction transaction) throws ResourceNotFoundException {
+        Account account = accountRepository.findById(transaction.getToAccount()).orElseThrow(() -> new ResourceNotFoundException(("Account not for this id::"+transaction.getToAccount())));
         double intialamount = account.getBalance();
-        account.setBalance(amount+intialamount);
-        return accountRepository.save(account);
-
-
+        account.setBalance(transaction.getAmount()+intialamount);
+        accountRepository.save(account);
+        transaction.setType("deposit");
+        transactionRepository.save(transaction);
+        System.out.println("inside deposit");
+        return ResponseEntity.ok().build();
     }
-    public Transaction transact(Transaction transaction)throws ResourceNotFoundException
-    {
-        String s = transaction.getType();
-        if(s.equalsIgnoreCase("Withdraw"))
-        {
 
-            withdrawal(transaction.getAmount(),transaction.getFromAccount());
-
-
-
-
+    public ResponseEntity transfer(Transaction transaction) throws ResourceNotFoundException {
+        Account account1 = accountRepository.findById(transaction.getFromAccount())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not for for this id :: " + transaction.getFromAccount()));
+        double initialBalance = account1.getBalance();
+        if (transaction.getAmount() > initialBalance) {
+            System.out.println("Withdrawal amount exceeded");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Insufficient Balance");
         }
-        else if(s.equalsIgnoreCase("Deposit"))
-        {
-            deposit(transaction.getAmount(),transaction.getToAccount());
-
-        }
-        else if(s.equalsIgnoreCase("Transfer"))
-        {
-
-            withdrawal(transaction.getAmount(),transaction.getFromAccount());
-
-
-
-            deposit(transaction.getAmount(), transaction.getToAccount());
-        }
-        return transactionRepository.save(transaction);
-
-    }}
+        account1.setBalance(initialBalance - transaction.getAmount());
+        accountRepository.save(account1);
+        Account account2 = accountRepository.findById(transaction.getToAccount()).orElseThrow(() -> new ResourceNotFoundException(("Account not for this id::"+transaction.getToAccount())));
+        double intialamount = account2.getBalance();
+        account2.setBalance(transaction.getAmount()+intialamount);
+        accountRepository.save(account2);
+        transaction.setType("transfer");
+        transactionRepository.save(transaction);
+        return ResponseEntity.ok().body("Transfer Successful");
+    }
+}
