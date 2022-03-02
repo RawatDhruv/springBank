@@ -1,0 +1,11 @@
+2022-03-02 11:04:51 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ACCOUNTS[*]"; expected "ALTER, ANALYZE"; SQL statement:
+ACCOUNTS [42001-200]
+2022-03-02 11:04:52 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ACCOUNTS[*]"; expected "ALTER, ANALYZE"; SQL statement:
+ACCOUNTS [42001-200]
+2022-03-02 11:21:47 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM ACCOUNTS 
+SELECT[*] *FROM CUSTOMERS"; SQL statement:
+SELECT * FROM ACCOUNTS 
+SELECT *FROM CUSTOMERS [42000-200]

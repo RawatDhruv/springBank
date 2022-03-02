@@ -1,30 +1,17 @@
 package com.springBank.model;
 
-import com.springBank.*;
-import org.hibernate.internal.util.ZonedDateTimeComparator;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.*;
+
 import org.springframework.lang.NonNull;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-
-
-import javax.persistence.*;
-
 
 import java.util.Date;
 
 
 @Entity
 @Table(name = "Transactions")
-
 public class Transaction {
 
     private Long id;
-
     private Long fromAccount;
     private Long toAccount;
     private String type;
@@ -37,15 +24,13 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
-		return id;
-	}
-
+        return id;
+    }
     public void setId(long id){
         this.id = id;
     }
 
     @Column(name = "from_Account")
-  
     public Long getFromAccount() {
         return fromAccount;
     }
@@ -82,20 +67,20 @@ public class Transaction {
     }
 
     public void setAmount(double amount) {
-		this.amount = amount;
-	}
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
-	private Date time;
+        this.amount = amount;
+    }
 
-	@PrePersist
-	private void onCreate()
-	{
-		time = new Date();
-		}
-	
-	public Date getTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
+    private Date time;
+
+    @PrePersist
+    private void onCreate()
+    {
+        time = new Date();
+    }
+
+    public Date getTime() {
         return time;
     }
 
@@ -103,7 +88,7 @@ public class Transaction {
         this.time = time;
     }
 
-	public Transaction(Long id, Long fromAccount, Long toAccount, String type, Double amount, Date time) {
+    public Transaction(Long id, Long fromAccount, Long toAccount, String type, Double amount, Date time) {
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
         this.type = type;

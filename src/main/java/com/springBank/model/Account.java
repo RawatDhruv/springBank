@@ -20,6 +20,7 @@ public class Account {
     }
 
     public Account(long id,@NotNull(message = "CustomerID is required.")long customerId,double balance) {
+        super();
         this.id = id;
         this.customerId = customerId;
         this.balance = balance;
@@ -53,6 +54,5 @@ public class Account {
         this.balance = balance;
     }
 
-   
-	
+
 }
