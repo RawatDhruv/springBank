@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,24 +36,25 @@ public class AccountService {
         return ResponseEntity.ok().body(account);
 	}
 
-	public Account createAccount(Account newAccount) {
+	public ResponseEntity createAccount(Account newAccount) {
 		Optional<Customer> customer = customerRepository.findById(newAccount.getCustomerId());
 		if(!customer.isPresent()) {
 			System.out.println("No Customer Found");
-			return null;
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer id not found");
 		}
 		List<Account> accounts = accountRepository.findAll();
-        List<Account> customerAccounts = accounts.stream().filter(account1 -> account1.getCustomerId() == newAccount.getCustomerId()).collect(Collectors.toList());
-        if (customerAccounts.size()>=3) {
-            System.out.println("More than 3 accounts found for customerID " + newAccount.getCustomerId());
-            return null;
-        }
-        return accountRepository.save(newAccount);
+		List<Account> customerAccounts = accounts.stream().filter(account1 -> account1.getCustomerId() == newAccount.getCustomerId()).collect(Collectors.toList());
+		if (customerAccounts.size()>=3) {
+			System.out.println("More than 3 accounts found for customerID " + newAccount.getCustomerId());
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("More than 3 accounts found for customerID ");
+		}
+		 accountRepository.save(newAccount);
+		return ResponseEntity.status(HttpStatus.CREATED).body("Account Created Successfully");
 	}
 
-	public ResponseEntity<Account> deleteAccount(Long accountId) throws ResourceNotFoundException {
+	public ResponseEntity deleteAccount(Long accountId)throws ResourceNotFoundException {
 		accountRepository.deleteById(accountId);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body("Account Deleted ");
 	}
 	
 	

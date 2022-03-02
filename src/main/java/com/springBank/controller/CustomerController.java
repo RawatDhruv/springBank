@@ -2,6 +2,7 @@ package com.springBank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.springBank.service.CustomerService;
 import com.springBank.model.Customer;
@@ -10,7 +11,9 @@ import com.springBank.exception.*;
 
 import java.util.List;
 
+import javax.validation.Valid;
 
+@Validated
 @RestController
 public class CustomerController {
 	
@@ -30,7 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping("/addCustomer")
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public Customer createCustomer(@Valid @RequestBody Customer customer) {
         
         return customerService.save(customer);
     }

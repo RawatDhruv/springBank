@@ -2,14 +2,19 @@ package com.springBank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import com.springBank.service.AccountService;
 import com.springBank.model.Account;
 import com.springBank.exception.*;
 
+@Validated
 @RestController
 public class AccountController {
 	    
@@ -29,7 +34,7 @@ public class AccountController {
 	    }
 
 	    @PostMapping("/addAccount")
-	    public Account createAccount(@RequestBody Account newAccount) {	        
+	    public ResponseEntity createAccount(@Valid @RequestBody Account newAccount) {	        
 	        return accountService.createAccount(newAccount);
 	    }
 	    
