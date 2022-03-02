@@ -45,14 +45,14 @@ public class CustomerService {
 		return customerRepository.save(customer);
 	}
 
-	public ResponseEntity<Customer> getCustomerbyId(Long customerId) {
+	public ResponseEntity  getCustomerbyId(Long customerId) {
 		Optional<Customer> optionalUser = customerRepository.findById(customerId);
         Customer customer;
         if (optionalUser.isPresent()) {
             customer = optionalUser.get();
             return ResponseEntity.ok().body(customer);
         }
-        return null;
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer Doesn't Exist");
 	}
 
 	public List<Customer> findAll() {
@@ -66,7 +66,7 @@ public class CustomerService {
 		List<Account> customerAccounts = accounts.stream().filter(account1 -> account1.getCustomerId() == id).collect(Collectors.toList());
 		if (customerAccounts.size()>0) {
 			System.out.println("Accounts found for customerID " + id);
-			return null;
+			return  ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Customers with existing accounts cannot be deleted");
 		}
 		customerRepository.delete(customer);
 		return ResponseEntity.ok().body("Customer deleted");

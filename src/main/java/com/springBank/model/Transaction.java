@@ -24,6 +24,7 @@ import java.util.Date;
 public class Transaction {
 
     private Long id;
+
     private Long fromAccount;
     private Long toAccount;
     private String type;

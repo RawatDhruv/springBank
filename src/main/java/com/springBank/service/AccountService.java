@@ -40,7 +40,7 @@ public class AccountService {
 		Optional<Customer> customer = customerRepository.findById(newAccount.getCustomerId());
 		if(!customer.isPresent()) {
 			System.out.println("No Customer Found");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No id customer id");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No  customer id is found");
 		}
 		List<Account> accounts = accountRepository.findAll();
 		List<Account> customerAccounts = accounts.stream().filter(account1 -> account1.getCustomerId() == newAccount.getCustomerId()).collect(Collectors.toList());

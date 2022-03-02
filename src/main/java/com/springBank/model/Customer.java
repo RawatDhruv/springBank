@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.lang.String;
 
 @Entity
@@ -15,13 +16,14 @@ import java.lang.String;
 
 public class Customer {
 	private long id;
-	@NonNull
+	@NotEmpty(message = "Name is required.")
 	private String name;
-
+	@NotEmpty(message = "Email is required.")
 	private String email;
+	@NotEmpty(message = "Phone No. is required.")
 	private String phoneNo;
+	@NotEmpty(message = "Address is required.")
 	private String address;
-
 
 
 	
@@ -52,7 +54,11 @@ public class Customer {
 	
 	public Customer() {};
 
-	public Customer(long id, String name, String email, String phoneNo, String address) {
+	public Customer(long id, @NotEmpty(message = "Name is required.") String name,
+					@NotEmpty(message = "Email is required.") String email,
+					@NotEmpty(message = "Phone No. is required.") String phoneNo,
+					@NotEmpty(message = "Address is required.") String address) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
